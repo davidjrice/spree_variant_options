@@ -10,7 +10,7 @@ Spree::Variant.class_eval do
     { 
       :id    => self.id, 
       :count => self.count_on_hand, 
-      :price => Spree::Money.new(actual_price)
+      :price => number_to_currency(actual_price, unit: "&pound;")
     }
   end
     
