@@ -44,7 +44,7 @@ function VariantOptions(params) {
 
   function init() {
     divs = $('#product-variants .variant-options');
-    disable(divs.find('a.option-value').addClass('locked'));
+    //disable(divs.find('a.option-value').addClass('locked'));
     update();
     enable(parent.find('a.option-value'));
     toggle();
