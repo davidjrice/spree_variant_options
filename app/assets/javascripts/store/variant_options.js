@@ -154,6 +154,20 @@ function VariantOptions(params) {
 
   function find_variant() {
     var selected = divs.find('a.selected');
+    sizePrice = selected.data('size-price');
+    $.each($('[data-variant-prices]'), function(i, element) { 
+      sizes = $(element).data('variant-prices').split(',');
+      elementName = $(element).find('.variant-desc').html().trim();
+      if (elementName == 'None') {
+        $(element).parents('ul').prepend($(element).parent());
+        return;
+      }
+      if (sizes.indexOf(sizePrice.toString()) != -1) {
+        $(element).hide();
+      } else {
+        $(element).show();
+      }
+    });
     var variants = get_variant_objects(selected.get(0).rel);
     if (selected.length == divs.length) {
       return variant = variants[selection[0]];
