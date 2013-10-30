@@ -152,6 +152,36 @@ function VariantOptions(params) {
     return parseFloat(string.replace(/[^\d\.]/g, ''));
   }
 
+  function get_frame_price(frameElementRel) {
+    var keys, variants, count = 0, selected = {};
+    var selectedSize = divs.find('a.selected:first');
+    var sizePrice = selectedSize.data('size-price');
+
+    var sels = $.map(selectedSize, function(i) { return i.rel });
+    if (frameElementRel) {
+      sels.push(frameElementRel);
+    }
+    var combinedSelection = [];
+    $.each(sels, function(key, value) {
+      key = value.split('-');
+      var v = options[key[0]][key[1]];
+      keys = $.keys(v);
+      var m = Array.find_matches(combinedSelection.concat(keys));
+      if (combinedSelection.length == 0) {
+        combinedSelection = keys;
+      } else if (m) {
+        combinedSelection = m;
+      }
+    });
+
+    var variants = get_variant_objects(selectedSize.get(0).rel);
+    var frameVariant = variants[combinedSelection[0]];
+
+    framePrice = frameVariant.price.slice(1);
+    framePrice = parseFloat(framePrice) - parseFloat(sizePrice);
+    return "£" + framePrice + ".00";
+  }
+
   function find_variant() {
     var selected = divs.find('a.selected');
     sizePrice = selected.data('size-price');
@@ -160,12 +190,19 @@ function VariantOptions(params) {
       elementName = $(element).find('.variant-desc').html().trim();
       if (elementName == 'None') {
         $(element).parents('ul').prepend($(element).parent());
+        if (selected.length !== divs.length) {
+          $(element).children('.variant-price').html("N/A");
+        }
         return;
       }
       if (sizes.indexOf(sizePrice.toString()) != -1) {
         $(element).hide();
       } else {
         $(element).show();
+        if (selected.length !== divs.length) {
+          framePrice = get_frame_price($(element)[0].rel);
+          $(element).children('.variant-price').html(framePrice);
+        }
       }
     });
     var variants = get_variant_objects(selected.get(0).rel);
