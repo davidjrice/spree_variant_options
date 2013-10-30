@@ -177,7 +177,7 @@ function VariantOptions(params) {
     var variants = get_variant_objects(selectedSize.get(0).rel);
     var frameVariant = variants[combinedSelection[0]];
 
-    framePrice = frameVariant.price.slice(1);
+    framePrice = frameVariant.price.slice(1).replace(',', '');
     framePrice = parseFloat(framePrice) - parseFloat(sizePrice);
     return "£" + framePrice + ".00";
   }
