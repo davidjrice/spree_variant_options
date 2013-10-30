@@ -179,7 +179,7 @@ function VariantOptions(params) {
 
     framePrice = frameVariant.price.slice(1).replace(',', '');
     framePrice = parseFloat(framePrice) - parseFloat(sizePrice);
-    return "£" + framePrice + ".00";
+    return "£" + framePrice;
   }
 
   function find_variant() {
