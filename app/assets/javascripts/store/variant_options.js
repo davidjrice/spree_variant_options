@@ -187,7 +187,7 @@ function VariantOptions(params) {
     sizePrice = selected.data('size-price');
     $.each($('[data-variant-prices]'), function(i, element) { 
       sizes = $(element).data('variant-prices').split(',');
-      elementName = $(element).find('.variant-desc').html().trim();
+      elementName = $.trim($(element).find('.variant-desc').html());
       if (elementName == 'None') {
         $(element).parents('ul').prepend($(element).parent());
         if (selected.length !== divs.length) {
